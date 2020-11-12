@@ -51,19 +51,29 @@ Server: Docker Engine - Community
 docker info :shows most configuration values for the enging
 
 
+19. Starting a Nginx Web Server
+Image is biraries, libraries, source code ... we want to run
+Container is a running instance of an Image
+We can have many Containers running based on one Image
 
+docker container run --publish 8888:80 nginx :will do below things:
+   - downloads Image 'nginx' from Docker Hub
+   - starts a new Container form this Image
+   - Opens port 80 on the host IP (in this case, my mac, my physical mac)
+   - routes traffic to the container IP, port 8888
+   - then we open browser and go to localhost:8888, it will go to nginx home page
 
+ctrl + C :to stop the container
+docker container ls :list all running containers
+docker container ls -a :list all containers
+docker container stop <container id> :to stop a running container
+docker container run always starts a NEW container
+docker container start to start an existing stopped container
 
-
-
-
-
-
-
-
-
-
-
+docker container run --publish 8888:80 --detach --name <container name> nginx :to detach the random name, and name the new container
+docker container logs <container name or id> :view container logs
+docker container top <container name or id> :list processes of the running container
+docker container rm <list container IDs> :remove containers
 
 
 
