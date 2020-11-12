@@ -57,9 +57,9 @@ Container is a running instance of an Image
 We can have many Containers running based on one Image
 
 docker container run --publish 8888:80 nginx :will do below things:
-   - downloads Image 'nginx' from Docker Hub
+   - find the Image locally, if does not find, then downloads Image 'nginx' (latest version) from Docker Hub
    - starts a new Container form this Image
-   - Opens port 80 on the host IP (in this case, my mac, my physical mac)
+   - Opens port 80 on the host IP, --publish (in this case, my mac, my physical mac)
    - routes traffic to the container IP, port 8888
    - then we open browser and go to localhost:8888, it will go to nginx home page
 
@@ -74,7 +74,6 @@ docker container run --publish 8888:80 --detach --name <container name> nginx :t
 docker container logs <container name or id> :view container logs
 docker container top <container name or id> :list processes of the running container
 docker container rm <list container IDs> :remove containers
-
 
 
 
