@@ -1,12 +1,17 @@
 8. Docker Editions: Which Do I Use?
-Docker CE (Comunity Editions) và Docker EE (Enterprise Editions)
+Docker CE (Comunity Editions) and Docker EE (Enterprise Editions)
 Three major types of install: Direct, Mac/Win, Cloud
 Docker for Windows, Docker for Mac and Docker for AWS/Azure/Google
 
 
-
-
-
+12. Docker for Mac Setup and Tips
+Download and install Docker Desktop for Mac
+Intall docker extension on VS Code
+Install bash-completion via these instructions:
+   - https://docs.docker.com/compose/completion/
+   - https://docs.docker.com/docker-for-mac/#install-shell-completion
+   - then open another terminal to use it
+docker version :to check the current installed version of docker
 
 
 
