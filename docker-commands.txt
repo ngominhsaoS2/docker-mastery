@@ -86,11 +86,14 @@ Here is steps to check:
    - curl localhost:8080 (to test apache/httpd)
 
 docker image ls :list all local Images
+-d :it's the short version of --detach. By running in detached mode, we are able to have access to our command line when the container spins up and runs. Without it, we would have logs constantly fed onto the screen.
+You didn't specify the -d flag to detach it in the background, and there aren't any logs coming across the screen because you haven't connected to the published port yet, so Nginx has nothing to log about.
 
 
-
-
-
+25. What's Going On In Containers: CLI Process Monitoring
+docker container top :list processes in one container
+docker container inspect :details of one container configuration
+docker container stats :performance stats for all container
 
 
 
