@@ -205,6 +205,10 @@ You're using custom networks right?
 This gets way easier with Docker Compose in future section
 
 
+32. Assignment Answers: Using Containers for CLI Testing
+docker container run --rm -it centos:7 bash :to run centos container and open bash terminal
+   --rm :automatically remove the container when it exits
+
 
 
 
