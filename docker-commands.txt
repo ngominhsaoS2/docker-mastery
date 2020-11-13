@@ -194,6 +194,17 @@ docker network disconnect <network-name> <existing-container> :disconnect a Cont
 docker container inspect <container-id-name> :then check the Networks property to see all virtual network that the container connects to
 
 
+30. Docker Networks: DNS and How Containers Find Each Other
+docker DNS :docker daemon has a built-in DNS server that containers use by default
+docker container exect -it <container-first> ping <container-second> :to test connect from first container to second container (in this case, they are in the same virtual network)
+
+Docker Networks: DNS
+Containers should not rely on IP's for inter-communication
+DNS for friendly names is built-in if you use custom networks
+You're using custom networks right?
+This gets way easier with Docker Compose in future section
+
+
 
 
 
