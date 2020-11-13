@@ -120,6 +120,96 @@ docker container port <container name of id> :display port config of the running
 docker container inspect --format '{{ .NetworkSettings.IPAddress }}' <container name of id> :display the container id on the current virtual network
 
 
+29. Docker Networks: CLI Management of Virtual Networks
+docker network ls :list all current virtual networks
+eg:
+saonms-macpro:~ saonm$ docker network ls
+NETWORK ID          NAME                DRIVER              SCOPE
+6f922a79eb52        bridge              bridge              local
+10ec83292d8f        host                host                local
+3eaffcd000b5        none                null                local
+
+--network bridge :default docker virtual network, which is NAT'ed behind the Host IP
+--network host :it gains performance by skipping virtual networks but sacrifices security of container model
+--network none :removes eth0 and only leaves you with localhost interface in container
+
+
+docker network inspect <network name of id>
+eg:
+saonms-macpro:~ saonm$ docker network inspect bridge
+[
+    {
+        "Name": "bridge",
+        "Id": "6f922a79eb520ebd78b7cadbe3cbbd1659c2fc98af80b019adc5f04803976a9b",
+        "Created": "2020-11-12T16:15:17.011363034Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv6": false,
+        "IPAM": { //saonm: ipconfig. It can be changed.
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "172.17.0.0/16",
+                    "Gateway": "172.17.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": { //saonm: shows all containers connect to this network (container Id, container Name, IPv4, IPv6...)
+            "4adbb9a5a0a1b1ddba70177e5337f18fccdc863ac2b04d56099256083c5f39df": {
+                "Name": "webhost",
+                "EndpointID": "54e37b1b824f1b739237135541db9b6a52e4ebc5386ea454820030e012e711e5",
+                "MacAddress": "02:42:ac:11:00:02",
+                "IPv4Address": "172.17.0.2/16",
+                "IPv6Address": ""
+            }
+        },
+        "Options": {
+            "com.docker.network.bridge.default_bridge": "true",
+            "com.docker.network.bridge.enable_icc": "true",
+            "com.docker.network.bridge.enable_ip_masquerade": "true",
+            "com.docker.network.bridge.host_binding_ipv4": "0.0.0.0",
+            "com.docker.network.bridge.name": "docker0",
+            "com.docker.network.driver.mtu": "1500"
+        },
+        "Labels": {}
+    }
+]
+
+
+docker network create <name> :create a new virtual network
+network driver :built-in or 3rd party extensions that give you virtual network features
+docker container run -d --name <container-name> --network <network-name> <image-name>
+   --network to specify a virtual network for this container
+docker network inspect <network-name> :check containers property to see the above container is attached to this network
+docker network connect <network-name> <existing-container> :connect a Container to a Network
+docker network disconnect <network-name> <existing-container> :disconnect a Container from a Network
+docker container inspect <container-id-name> :then check the Networks property to see all virtual network that the container connects to
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
