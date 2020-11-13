@@ -209,7 +209,22 @@ This gets way easier with Docker Compose in future section
 docker container run --rm -it centos:7 bash :to run centos container and open bash terminal
    --rm :automatically remove the container when it exits
 
+35. Assignment Answers: DNS Round Robin Test
+We can have multiple containers on a created network respond to the same DNS address
+docker network create dude :create a virtual network names "dude"
+docker container run -d --net dude --net-alias search elasticsearch:2
+   1/ create a container (not give a name), on "dude" virtual network
+   2/ --net-alias or --network-alias both work, to set alias names "search" for this container
+   3/ Image is "elasticsearch" version 2
 
+Run it 2 times, then we have 2 containers are running on "dude" virtual network, and have Docker Round Robint DNS alias names "search"
+
+Now we test the Docker Round Robint DNS alias names "search" by running nslookup, it will show all nodes (in this case, 2 nodes).
+We use alpine to run nslookup:
+docker container run --rm --net dude alpine nslookup search 
+   1/ --net dude :to join this container to "dude" virtual network
+   2/ Image is Alpine, to use nslookup
+   3/ nslookup search :finds nodes by using DNS name "search"
 
 
 
