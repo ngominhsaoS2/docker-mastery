@@ -91,18 +91,21 @@ You didn't specify the -d flag to detach it in the background, and there aren't 
 
 
 25. What's Going On In Containers: CLI Process Monitoring
-docker container top :list processes in one container
-docker container inspect :details of one container configuration
-docker container stats :performance stats for all container
+docker container top :list processes in one Container
+docker container inspect :details of one Container configuration
+docker container stats :performance stats for all Container
 
 
+26. Getting a Shell Inside Containers: No Need for SSH
+docker container run -it --name proxy nginx bash :to open a terminal after running a new 'nginx' Container
+   1/ -t :short for --tty, pseudo-tty, simulates a real terminal, like what SSH does
+   2/ -i :short for --interactive, keep session open to receive terminal input
+   3/ bash :if run with -it, it will give you a terminal inside the running Container
 
-
-
-
-
-
-
+docker container run -it --name ubuntu ubuntu :run a 'ubuntu' Image, then open a terminal on it (ubuntu Image default CMD is bash, so we dont have specify it)
+docker container start -ai ubuntu :start ubuntu container, then open a terminal
+docker container exec -it mysql bash :on 'mysql' running container, open a terminal (run additional command in existing Container)
+docker pull <image name> :pull an Image from Docker Hub
 
 
 
