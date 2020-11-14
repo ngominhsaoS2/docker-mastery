@@ -379,9 +379,20 @@ saonms-macpro:~ saonm$ docker image inspect nginx
 ]
 
 
+39. Image Tagging and Pushing to Docker Hub
+docker image tag <soure-image:tag> <target-image:tag> :create a new tag
+eg:
+saonms-macpro:~ saonm$ docker image ls
+REPOSITORY           TAG                 IMAGE ID            CREATED             SIZE
+nginx                latest              c39a868aad02        8 days ago          133MB
+saonm/nginx          latest              c39a868aad02        8 days ago          133MB
+ubuntu               latest              d70eaf7277ea        3 weeks ago         72.9MB
+mysql                latest              db2b37ec6181        3 weeks ago         545MB
+alpine               latest              d6e46aa2470d        3 weeks ago         5.57MB
+mysql/mysql-server   latest              c8552d79a138        3 weeks ago         405MB
+httpd                latest              3dd970e6b110        4 weeks ago         138MB
+
+We can see nginx and saonm/nginx have the same Image Id
 
 
-
-
-
-
+docker image push <repository>:<tag> :to push Image to Docker Hub with the given tag
