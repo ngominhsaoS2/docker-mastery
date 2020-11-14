@@ -227,18 +227,156 @@ docker container run --rm --net dude alpine nslookup search
    3/ nslookup search :finds nodes by using DNS name "search"
 
 
+37. The Mighty Hub: Using Docker Hub Registry Images
+docker pull <image-name>:<version> :to pull an Image from Docker Hub with the given version
 
 
+38. Images and Their Layers: Discover the Image Cache
+docker image history nginx:latest :show layers of changes made in image
+   - every layers gets its own uniq SHA, different from other layers, and this SHA will help docker knows if this layer is different from others
+   
+containers copy files system from Image, then run it. This calls Copy on Write.
+
+eg:
+saonms-macpro:~ saonm$ docker image history nginx
+IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
+c39a868aad02        7 days ago          /bin/sh -c #(nop)  CMD ["nginx" "-g" "daemon…   0B                  
+<missing>           7 days ago          /bin/sh -c #(nop)  STOPSIGNAL SIGTERM           0B                  
+<missing>           7 days ago          /bin/sh -c #(nop)  EXPOSE 80                    0B                  
+<missing>           7 days ago          /bin/sh -c #(nop)  ENTRYPOINT ["/docker-entr…   0B                  
+<missing>           7 days ago          /bin/sh -c #(nop) COPY file:0fd5fca330dcd6a7…   1.04kB              
+<missing>           7 days ago          /bin/sh -c #(nop) COPY file:13577a83b18ff90a…   1.96kB              
+<missing>           7 days ago          /bin/sh -c #(nop) COPY file:e7e183879c35719c…   1.2kB               
+<missing>           7 days ago          /bin/sh -c set -x     && addgroup --system -…   63.6MB              
+<missing>           7 days ago          /bin/sh -c #(nop)  ENV PKG_RELEASE=1~buster     0B                  
+<missing>           7 days ago          /bin/sh -c #(nop)  ENV NJS_VERSION=0.4.4        0B                  
+<missing>           7 days ago          /bin/sh -c #(nop)  ENV NGINX_VERSION=1.19.4     0B                  
+<missing>           4 weeks ago         /bin/sh -c #(nop)  LABEL maintainer=NGINX Do…   0B                  
+<missing>           4 weeks ago         /bin/sh -c #(nop)  CMD ["bash"]                 0B                  
+<missing>           4 weeks ago         /bin/sh -c #(nop) ADD file:0dc53e7886c35bc21…   69.2MB       
+
+My "nginx" image is c39a868aad02 layer. Other layers belong to the Image itself.
 
 
-
-
-
-
-
-
-
-
+docker image inspect <image-name-or-id> :show all info of the Image
+eg:
+saonms-macpro:~ saonm$ docker image inspect nginx
+[
+    {
+        "Id": "sha256:c39a868aad02a383c7e490e0fc4a5b0217f667f2de764bc2755e315a5adf64a1",
+        "RepoTags": [
+            "nginx:latest"
+        ],
+        "RepoDigests": [
+            "nginx@sha256:aeade65e99e5d5e7ce162833636f692354c227ff438556e5f3ed0335b7cc2f1b"
+        ],
+        "Parent": "",
+        "Comment": "",
+        "Created": "2020-11-05T18:21:10.923474978Z",
+        "Container": "16434ccbe2eab08b0e7e63149c390b8a346c8cf92899ba6063c1b2653628f3c1",
+        "ContainerConfig": {
+            "Hostname": "16434ccbe2ea",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": { //saonm: ports are opened.
+                "80/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [ //saonm: Environment Variables
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "NGINX_VERSION=1.19.4",
+                "NJS_VERSION=0.4.4",
+                "PKG_RELEASE=1~buster"
+            ],
+            "Cmd": [
+                "/bin/sh",
+                "-c",
+                "#(nop) ",
+                "CMD [\"nginx\" \"-g\" \"daemon off;\"]" //saonm: the command it would run when start containers by default
+            ],
+            "Image": "sha256:39d1a217abc58e72f1b21274ba555decbceb7e33d04ebf2ca1c605bf85328de8",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": [
+                "/docker-entrypoint.sh"
+            ],
+            "OnBuild": null,
+            "Labels": {
+                "maintainer": "NGINX Docker Maintainers <docker-maint@nginx.com>"
+            },
+            "StopSignal": "SIGTERM"
+        },
+        "DockerVersion": "19.03.12",
+        "Author": "",
+        "Config": {
+            "Hostname": "",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "NGINX_VERSION=1.19.4",
+                "NJS_VERSION=0.4.4",
+                "PKG_RELEASE=1~buster"
+            ],
+            "Cmd": [
+                "nginx",
+                "-g",
+                "daemon off;"
+            ],
+            "Image": "sha256:39d1a217abc58e72f1b21274ba555decbceb7e33d04ebf2ca1c605bf85328de8",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": [
+                "/docker-entrypoint.sh"
+            ],
+            "OnBuild": null,
+            "Labels": {
+                "maintainer": "NGINX Docker Maintainers <docker-maint@nginx.com>"
+            },
+            "StopSignal": "SIGTERM"
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 132865518,
+        "VirtualSize": 132865518,
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/a309c0b51c36e72dc3e6d73e2037c8f9649c0c23d3f5d2a8168891b44bfa1759/diff:/var/lib/docker/overlay2/f0d674cf10593a7bd7fb5998b7e7fdff3b014c318a720c4884bbc55a3af67d89/diff:/var/lib/docker/overlay2/1d596f92ec85f8547dc1406ff08204e8aaafdadcaec066c78bafa521cfd5a4d4/diff:/var/lib/docker/overlay2/1c21a8c55aa032e04a01984cc1c546137f28b299d0572e8a63568b15023a253a/diff",
+                "MergedDir": "/var/lib/docker/overlay2/17412dbb386526c1d8919cc0596a880d2d0f2d95cf8d8c1da6427d1ffece11c9/merged",
+                "UpperDir": "/var/lib/docker/overlay2/17412dbb386526c1d8919cc0596a880d2d0f2d95cf8d8c1da6427d1ffece11c9/diff",
+                "WorkDir": "/var/lib/docker/overlay2/17412dbb386526c1d8919cc0596a880d2d0f2d95cf8d8c1da6427d1ffece11c9/work"
+            },
+            "Name": "overlay2"
+        },
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:d0fe97fa8b8cefdffcef1d62b65aba51a6c87b6679628a2b50fc6a7a579f764c",
+                "sha256:2baf69a23d7a7ec2c54aa4b3371989d82c1031bae757baafb336fc3a21501683",
+                "sha256:2f57e21e4365db3a235bc19cd9cde503036486e1bea40e96f7374b0f4c97675b",
+                "sha256:aee208b6ccfbd287b27a355829ee65d873184f4bd4a844d39f00af77810b7cc4",
+                "sha256:7b5417cae114bdeed27f524ccaf3be8506ed5fceba3a17aabe268aca8861bd55"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "0001-01-01T00:00:00Z"
+        }
+    }
+]
 
 
 
