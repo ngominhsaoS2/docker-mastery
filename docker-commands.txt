@@ -479,5 +479,6 @@ docker container run -d --name mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=true -v <volu
 Remove container, does not remove its volume
 
 
-
-
+49. Persistent Data: Bind Mounting
+docker container run -d --name nginx -p 8888:80 -v $(pwd):/usr/share/nginx/html nginx
+   -v to bind content on pwd to /usr/share/nginx/html folder on the container.
