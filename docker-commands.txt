@@ -414,3 +414,19 @@ docker build -t <tagname> <directory> :build an Image with the given tag on the 
 docker container run --rm -p 8888:3000 testnode :node run on port 3000, so we direct from host port 8888 to container port 3000
 
 
+46. Container Lifetime & Persistent Data
+Containers are usually immutable (can not be changed) and ephemeral (transient)
+"immutable infrastructure": we dont change the container when it's running, just re-deploy it then run again.
+Containers should not contain databases, unique data...
+This is known as "persistent data"
+Docker provides two ways:
+   - volumns: make special location outside of container UFS (union file system) to store these "persistent data", can be attached to whatever container.
+   - bind mounts: link container to host path
+
+
+
+
+
+
+
+
