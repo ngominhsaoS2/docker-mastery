@@ -420,12 +420,63 @@ Containers are usually immutable (can not be changed) and ephemeral (transient)
 Containers should not contain databases, unique data...
 This is known as "persistent data"
 Docker provides two ways:
-   - volumns: make special location outside of container UFS (union file system) to store these "persistent data", can be attached to whatever container.
+   - volumes: make special location outside of container UFS (union file system) to store these "persistent data", can be attached to whatever container.
    - bind mounts: link container to host path
 
 
+47. Persistent Data: Data Volumes
+docker image inspect <image> :to see all details of Image, and see this "Volumes" property
+eg:
+"Volumes": {
+    "/var/lib/mysql": {}
+},
+
+We can see the same thing when we inspect a container, it also has "Volumes" property.
+We can also see "Mounts" property.
+
+eg:
+"Volumes": {
+    "/var/lib/mysql": {}
+},
+
+"Mounts": [
+    {
+        "Type": "volume",
+        "Name": "5b5494e7718d4c23d47f194065f0bc07f1d43459e4adb16ff81fb323ce46dd5a",
+        "Source": "/var/lib/docker/volumes/5b5494e7718d4c23d47f194065f0bc07f1d43459e4adb16ff81fb323ce46dd5a/_data",
+        "Destination": "/var/lib/mysql",
+        "Driver": "local",
+        "Mode": "",
+        "RW": true,
+        "Propagation": ""
+    }
+],
+
+The container gets its own unique location on the host to store data.
+In the background, docker maps/mounts the data to the container, from "Source" (on the actual host) to "Destination" (on the container)
 
 
+docker volume ls :displays all existing volumes.
+docker volume inspect <volumename> :see all details of the volume.
+eg:
+saonms-macpro:~ saonm$ docker volume inspect 5b5494e7718d4c23d47f194065f0bc07f1d43459e4adb16ff81fb323ce46dd5a 
+[
+    {
+        "CreatedAt": "2020-11-15T10:04:06Z",
+        "Driver": "local",
+        "Labels": null,
+        "Mountpoint": "/var/lib/docker/volumes/5b5494e7718d4c23d47f194065f0bc07f1d43459e4adb16ff81fb323ce46dd5a/_data",
+        "Name": "5b5494e7718d4c23d47f194065f0bc07f1d43459e4adb16ff81fb323ce46dd5a",
+        "Options": null,
+        "Scope": "local"
+    }
+]
+
+docker container run -d --name mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=true -v <volume-name>:<path-on-container> mysql
+   1/ -v to name the volume for this container, either creating a new one or using the existing one
+   2/ volume-name and path-on-container are both required
+
+Remove container, does not remove its volume
 
 
 
