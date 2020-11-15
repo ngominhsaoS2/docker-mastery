@@ -394,5 +394,23 @@ httpd                latest              3dd970e6b110        4 weeks ago        
 
 We can see nginx and saonm/nginx have the same Image Id
 
-
 docker image push <repository>:<tag> :to push Image to Docker Hub with the given tag
+
+
+44. Assignment Answers: Build Your Own Dockerfile and Run Containers From It
+
+Explain things on Dockerfile:
+
+FROM node:6-alpine :it starts with this image, nodejs with alpine
+EXPOSE 3000 :open port 3000 on the host machine, not on the container
+WORKDIR /usr/src/app :change working directory of container to this directory, using WORKDIR is preferred to using 'RUN cd /some/path'
+RUN npm install && npm cache clean :run first command, if succeeds, run the second command
+RUN npm install; npm cache clean :run both commands at the sametime, parallel
+COPY . . :copy from current working directory of host to the working directory of container, in this case, it is /usr/src/app because we run WORKDIR /usr/src/app above
+CMD ["tini", "--", "node", "./bin/www"] :to execute this command '/sbin/tini -- node ./bin/www'
+
+
+docker build -t <tagname> <directory> :build an Image with the given tag on the directory
+docker container run --rm -p 8888:3000 testnode :node run on port 3000, so we direct from host port 8888 to container port 3000
+
+
