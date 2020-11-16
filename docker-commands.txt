@@ -506,5 +506,14 @@ See compose-sample-2 to see the docker-compose.yml file. (saonm modified 80:80 t
 docker-compose up :on the directory having docker-compose.yml file, run this command.
 
 
+58. Assignment Answers: Build a Compose File For a Multi-Container Service
+See compose-assignment-2 and see the docker.compose.yml file.
+
+
+
+
+
+
+
 
 
