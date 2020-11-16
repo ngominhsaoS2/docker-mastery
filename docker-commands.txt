@@ -510,6 +510,19 @@ docker-compose up :on the directory having docker-compose.yml file, run this com
 See compose-assignment-2 and see the docker.compose.yml file.
 
 
+59. Adding Image Building to Compose Files
+See compose-sample-2 to see "build" property.
+eg:
+build:
+    context: .
+    dockerfile: nginx.Dockerfile
+
+Sometimes, instead of using an original image, we want to use our custom image.
+
+volumes:
+    - ./html:/usr/local/apache2/htdocs/
+
+Above is Bind Mouting.
 
 
 
