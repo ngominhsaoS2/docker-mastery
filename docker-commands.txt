@@ -398,6 +398,7 @@ docker image push <repository>:<tag> :to push Image to Docker Hub with the given
 
 
 44. Assignment Answers: Build Your Own Dockerfile and Run Containers From It
+Using Dockerfile to build your custom Image.
 
 Explain things on Dockerfile:
 
@@ -481,4 +482,24 @@ Remove container, does not remove its volume
 
 49. Persistent Data: Bind Mounting
 docker container run -d --name nginx -p 8888:80 -v $(pwd):/usr/share/nginx/html nginx
-   -v to bind content on pwd to /usr/share/nginx/html folder on the container.
+   1/ -v to bind content on pwd (on the host machine) to /usr/share/nginx/html directory on the container.
+   2/ Of course, we can provide full path instead of $(pwd) to bind.
+
+
+51. Assignment Answers: Database Upgrades with Named Volumes
+Best practice, not upgrade application on containers, just replace container with the newer/upgraded version.
+
+docker container run -d --name psql -v psql-data:/var/lib/postgresql/data postgres:9.6.1
+docker container logs -f psql
+
+
+
+
+
+
+
+
+
+
+
+
