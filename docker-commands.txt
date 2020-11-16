@@ -494,11 +494,16 @@ docker container logs -f psql
 
 
 55. Docker Compose and The docker-compose.yml File
-See ./compose-sample-1 its contents to see the syntax of the yml/yaml file.
+Use docker-compose instead of running bunch of docker commands manually.
+We can specify services (within image, port, volume,...).
+
+See compose-sample-1 its contents to see the syntax of the yml/yaml file.
 
 
+56. Trying Out Basic Compose Commands
+See compose-sample-2 to see the docker-compose.yml file. (saonm modified 80:80 to 8080:80 cuz the port 80 on the host machine is in use by other process)
 
-
+docker-compose up :on the directory having docker-compose.yml file, run this command.
 
 
 
