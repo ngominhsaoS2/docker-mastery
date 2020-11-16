@@ -493,8 +493,8 @@ docker container run -d --name psql -v psql-data:/var/lib/postgresql/data postgr
 docker container logs -f psql
 
 
-
-
+55. Docker Compose and The docker-compose.yml File
+See ./compose-sample-1 its contents to see the syntax of the yml/yaml file.
 
 
 
