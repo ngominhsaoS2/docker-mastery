@@ -525,8 +525,85 @@ volumes:
 Above is Bind Mouting.
 
 
+63. Create Your First Service and Scale It Locally
+docker info :check "Swarm" property to see whether it is active
+    By default, docker does not set it active
+
+docker swarm init :initial swarm on this host machine
+
+eg:
+Swarm initialized: current node (o9ytr6vswmqrfa4hxcl8k9dby) is now a manager.
+
+To add a worker to this swarm, run the following command:
+
+    docker swarm join --token SWMTKN-1-5qf4jrk11ggtynj95ctqmcrh6bwrvhzq53xk89iy07zy5y9svp-5kqxh8q3dg6oxvh9kw2p8k646 192.168.65.3:2377
+
+To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
+
+Lots of PKI and security automation
+   - Root Signing Certificate created for our Swarm
+   - Cerfificate is issued for first Manager node
+   - Join tokens are created
+
+Raft database created to stroe root CA, configs and secrets
+   - Encrypted by default on disk
+   - No need for another key/value system to hold orchestration/secrets
+   - Replicates logs amongst Managers via mutual TLS in "control plane"
 
 
+docker node ls :show all nodes on the swarm
+eg:
+saonms-macpro:~ saonm$ docker node ls
+ID                            HOSTNAME            STATUS              AVAILABILITY        MANAGER STATUS      ENGINE VERSION
+o9ytr6vswmqrfa4hxcl8k9dby *   docker-desktop      Ready               Active              Leader              19.03.13
+
+we just have one "leader" at a time among managers nodes
+
+docker service COMMANDS :the "service" commands is replacements for "docker run"
+    - docker run is built for ground up, it's good for single node solution
+
+saonms-macpro:~ saonm$ docker service --help
+
+Usage:	docker service COMMAND
+
+Manage services
+
+Commands:
+  create      Create a new service
+  inspect     Display detailed information on one or more services
+  logs        Fetch the logs of a service or task
+  ls          List services
+  ps          List the tasks of one or more services
+  rm          Remove one or more services
+  rollback    Revert changes to a service's configuration
+  scale       Scale one or multiple replicated services
+  update      Update a service
+
+Run 'docker service COMMAND --help' for more information on a command.
+
+
+docker service create alpine ping 8.8.8.8 :create a new service form "alpine" image
+docker service ls :list all services
+    - it just shows services, it does not show running containers
+
+docker service ps <service-name-or-id>
+eg:
+saonms-macpro:~ saonm$ docker service ls
+ID                  NAME                MODE                REPLICAS            IMAGE               PORTS
+s0ajgqm8saw1        relaxed_lamport     replicated          1/1                 alpine:latest       
+saonms-macpro:~ saonm$ docker service ps relaxed_lamport 
+ID                  NAME                IMAGE               NODE                DESIRED STATE       CURRENT STATE           ERROR               PORTS
+ul8n7w7tap01        relaxed_lamport.1   alpine:latest       docker-desktop      Running             Running 3 minutes ago                       
+saonms-macpro:~ saonm$ docker container ls
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+2e1cc9349a99        alpine:latest       "ping 8.8.8.8"      3 minutes ago       Up 3 minutes                            relaxed_lamport.1.ul8n7w7tap01eamgaa6dtgjj8
+
+docker service update <service-name-or-id> --replicas 3 :make this service has 3 replicas
+
+If we remove a container manually, swarm will see it's down and will bring it up.
+We have to bring the whole service down.
+
+docker service rm <service-name-or-id> :remove the whole service, includs all its replicas
 
 
 
