@@ -606,4 +606,24 @@ We have to bring the whole service down.
 docker service rm <service-name-or-id> :remove the whole service, includs all its replicas
 
 
+66. Creating a 3-Node Swarm Cluster
+Install docker machine https://docs.docker.com/machine/install-machine/
+Should have Virtual Box installed on your host machine alread.
+
+docker-machine create <servername> :to create a VM on Virtual Box with the given name
+docker-machine ssh <servername> :to login to the above server
+docker-machine env <servername> :to see environment variables on this server node.
+docker swarm init --advertise-addr 10.0.2.15 :init a swarm node
+
+Copy the swarm join command, then paste to node2 and node3 to join the swarm as a worker.
+
+We can not use swarm commands on worker nodes, they dont have right to control the swarm.
+
+docker node update --role <"manager" or "woker" role> <nodename> :make this node become manager/worker
+docker swarm join-token manager :will show the command to join this swarm as manager, we can change the token if it's revealed.
+
+
+
+
+
 
