@@ -623,6 +623,14 @@ docker node update --role <"manager" or "woker" role> <nodename> :make this node
 docker swarm join-token manager :will show the command to join this swarm as manager, we can change the token if it's revealed.
 
 
+67. Scaling Out with Overlay Networking
+Overlay network is a new kind of network driver, it helps to connect node to node.
+
+docker network create --driver overlay <networkname> :create a network type "overlay" with the given name
+docker service create --name psql --network mydrupal -e POSTGRES_PASSWORD=password postgres
+docker service create --name drupal --network mydrupal -p 8080:80 drupal
+watch docker service ls :watch the service list in real time
+docker service inspect <servicename>
 
 
 
