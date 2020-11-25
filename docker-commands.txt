@@ -633,5 +633,45 @@ watch docker service ls :watch the service list in real time
 docker service inspect <servicename>
 
 
+68. Scaling Out with Routing Mesh
+docker service create --name search --replicas 3 -p 9200:9200 elasticsearch:2
+
+eg:
+saonms-macpro:~ saonm$ curl localhost:9200
+{
+  "name" : "Hero for Hire",
+  "cluster_name" : "elasticsearch",
+  "cluster_uuid" : "WK51b9HPSlitVo4IZqtXiQ",
+  "version" : {
+    "number" : "2.4.6",
+    "build_hash" : "5376dca9f70f3abef96a77f4bb22720ace8240fd",
+    "build_timestamp" : "2017-07-18T12:17:44Z",
+    "build_snapshot" : false,
+    "lucene_version" : "5.5.4"
+  },
+  "tagline" : "You Know, for Search"
+}
+saonms-macpro:~ saonm$ curl localhost:9200
+{
+  "name" : "Vulcan",
+  "cluster_name" : "elasticsearch",
+  "cluster_uuid" : "COkEZWf5QEy9ssAFSM1-wA",
+  "version" : {
+    "number" : "2.4.6",
+    "build_hash" : "5376dca9f70f3abef96a77f4bb22720ace8240fd",
+    "build_timestamp" : "2017-07-18T12:17:44Z",
+    "build_snapshot" : false,
+    "lucene_version" : "5.5.4"
+  },
+  "tagline" : "You Know, for Search"
+}
+
+We can see we got 2 different results.
+
+
+
+
+
+
 
 
