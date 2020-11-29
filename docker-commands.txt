@@ -687,3 +687,11 @@ docker stack deploy -c example-voting-app-stack.yml voteapp :just like run docke
 docker stack ps voteapp :list the tasks in the stack, they are not actually containers
 docker stack services voteapp :show all services within their replicas.
 docker network ls
+
+
+72. Secrets Storage for Swarm: Protecting Your Environment Variables
+
+
+
+
+
