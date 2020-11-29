@@ -690,8 +690,9 @@ docker network ls
 
 
 72. Secrets Storage for Swarm: Protecting Your Environment Variables
-
-
-
-
-
+docker secret create <secret-name> <file> :Create a secret from a file or STDIN as content (for now, not sure what STDIN means)
+echo "anypassword" | docker secret create <secret-name> -
+docker secret ls
+docker secret inspect <secret-name>
+docker service create --name psql --secret psql_user --secret psql_pass -e POSTGRES_PASSWORD_FILE=/run/secrets/psql_pass -e POSTGRES_USER_FILE=/run/secrets/psql_user postgres
+   - we use /run/secrets/<key> to use secret
