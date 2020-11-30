@@ -719,6 +719,13 @@ docker-compose.override.yml will automatically override the default docker-compo
 
 docker-compose -f docker-compose.yml -f docker-compose.prod.yml config > output.yml
    - this is the command to combine 2 yml files into one file, then docker will use this combined file instead.
-   
+
+
+79. Service Updates: Changing Things In Flight
+docker service update --image myapp:1.2.1 <servicename>
+docker service update --env-add NODE_ENV=production --publish-rm 8080
+docker service scale web=8 api=6
+docker service update --publish--rm 8088 --publish-add 9090:80
+
 
 
