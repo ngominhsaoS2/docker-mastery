@@ -705,3 +705,20 @@ secrets:
     file: ./psql_user.txt
   psql_password:
     file: ./psql_password.txt
+
+
+78. Full App Lifecycle: Dev, Build and Deploy With a Single Compose Design
+eg:
+secrets:
+  psql-pw:
+    external: true
+
+"external" means we have to define this secret on terminal window.
+
+docker-compose.override.yml will automatically override the default docker-compose.yml file. Other docker compose yml file will need to be specified if it wants to be used.
+
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml config > output.yml
+   - this is the command to combine 2 yml files into one file, then docker will use this combined file instead.
+   
+
+
