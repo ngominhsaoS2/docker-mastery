@@ -696,3 +696,12 @@ docker secret ls
 docker secret inspect <secret-name>
 docker service create --name psql --secret psql_user --secret psql_pass -e POSTGRES_PASSWORD_FILE=/run/secrets/psql_pass -e POSTGRES_USER_FILE=/run/secrets/psql_user postgres
    - we use /run/secrets/<key> to use secret
+
+
+74. Using Secrets with Swarm Stacks
+eg:
+secrets:
+  psql_user:
+    file: ./psql_user.txt
+  psql_password:
+    file: ./psql_password.txt
