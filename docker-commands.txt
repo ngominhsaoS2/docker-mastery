@@ -730,11 +730,4 @@ docker service scale web=8 api=6
 docker service update --publish--rm 8088 --publish-add 9090:80
 
 
-93. Why Kubernetes
-
-
-96. Kubernetes Architecture Terminology
-
-
-
 
